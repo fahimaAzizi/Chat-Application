@@ -49,17 +49,15 @@ const Login = () => {
         )}
 
         <div className="login-forgot">
-          {currState === "Sign up" ? (
-            <p className="login-toggle">
+          {currState === "Sign up" ? <p className="login-toggle">
               Already have an account?{" "}
               <span onClick={() => setCurrState("Login")}>Login here</span>
-            </p>
-          ) : (
-            <p className="login-toggle">
+            </p> : <p className="login-toggle">
               Create a new account?{" "}
               <span onClick={() => setCurrState("Sign up")}>Click here</span>
             </p>
-          )}
+            
+         }
         </div>
 
       </form>
