@@ -7,8 +7,8 @@ import LeftSidebar from '../../components/LeftSidebar/LeftSidebar'
 import ChatBox from '../../components/ChatBox/ChatBox'
 function chat() {
   return (
-    <div>
-      <div>
+    <div className='chat'>
+      <div className='chat-container'>
         <RightSidebar/>
         <LeftSidebar/>
         <ChatBox/>
