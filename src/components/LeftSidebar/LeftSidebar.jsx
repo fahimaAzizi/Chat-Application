@@ -1,5 +1,6 @@
 import React from 'react'
 import assets from '../../assets/assets'
+import './LeftSidebar.css'
 
 function LeftSidebar() {
   return (
@@ -14,6 +15,7 @@ function LeftSidebar() {
         <img src={assets.search_icon} alt="" />
         <input type='text' placeholder='Search here..'/>
       </div>
+      <div className="ls-list"></div>
     </div>
     
    

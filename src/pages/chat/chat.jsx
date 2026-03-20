@@ -1,6 +1,5 @@
 import React from 'react'
 import './Chat.css'
-
 import RightSidebar from '../../components/RightSidebar/RightSidebar'
 import LeftSidebar from '../../components/LeftSidebar/LeftSidebar'
 import ChatBox from '../../components/ChatBox/ChatBox'
