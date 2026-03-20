@@ -5,7 +5,7 @@ import './chat.css'
 import RightSidebar from '../../components/RightSidebar/RightSidebar'
 import LeftSidebar from '../../components/LeftSidebar/LeftSidebar'
 import ChatBox from '../../components/ChatBox/ChatBox'
-function chat() {
+function Chat() {
   return (
     <div className='chat'>
       <div className='chat-container'>
@@ -17,4 +17,4 @@ function chat() {
   )
 }
 
-export default chat
+export default Chat
