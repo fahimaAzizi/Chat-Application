@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Login from './pages/Login/Login'
-import ProfileUpdate from './pages/ProfileUpdate/ProfileUpdate'
-import Chat from './pages/chat/chat'
+import Chat from './pages/Chat/Chat'
+import Login from './pages/login/Login'
+
 
 const App = () => {
   return (
@@ -10,7 +10,6 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/chat' element={<Chat/>} />
-        <Route path='/profile' element={<ProfileUpdate/>} />
       </Routes>
     </>
   )
