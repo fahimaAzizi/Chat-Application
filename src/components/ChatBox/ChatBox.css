@@ -51,3 +51,16 @@
 .chat-input label img{
     width: 22px;
 }
+.chat-input input{
+    flex: 1;
+    border: none;
+    outline: none;
+
+}
+.chat-msg{
+    height: calc(100% - 70px);
+    padding-bottom: 50px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
