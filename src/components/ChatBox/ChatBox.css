@@ -41,3 +41,13 @@
     left: 0;
     right: 0;
 }
+.chat-input img{
+    width: 30px;
+    cursor: pointer;
+}
+.chat-input label{
+    display: flex;
+}
+.chat-input label img{
+    width: 22px;
+}
