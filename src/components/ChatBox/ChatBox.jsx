@@ -21,7 +21,7 @@ const ChatBox = () => {
   </div>
 
   <div className="s-msg">
-    <p className="msg">Lorem ipsum is placeholder text commonly used in...</p>
+   <img src={assets.profile_img} alt="" />
     <div>
       <img src={assets.profile_img} alt="" />
       <p>2:30 PM</p>
