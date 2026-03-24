@@ -14,14 +14,14 @@ const ChatBox = () => {
 
   <div className="s-msg">
     <p className="msg">Lorem ipsum is placeholder text commonly used in...</p>
-    <div>
+    <div className=''>
       <img src={assets.profile_img} alt="" />
       <p>2:30 PM</p>
     </div>
   </div>
 
   <div className="s-msg">
-   <img src={assets.profile_img} alt="" />
+   <img className='msg-img' src={assets.profile_img} alt="" />
     <div>
       <img src={assets.profile_img} alt="" />
       <p>2:30 PM</p>
