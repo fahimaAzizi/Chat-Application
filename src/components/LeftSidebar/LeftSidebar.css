@@ -1,3 +1,84 @@
 .ls{
   padding: 10px;
 }
+.ls {
+  height: 75vh;
+  background: #001030;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top */
+.ls-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.ls-nav .logo {
+  width: 120px;
+}
+
+.ls-nav .menu img {
+  width: 20px;
+  cursor: pointer;
+}
+
+/* Search */
+.ls-search {
+  display: flex;
+  align-items: center;
+  background: #002060;
+  margin: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.ls-search img {
+  width: 18px;
+}
+
+.ls-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+}
+
+/* Friends List */
+.ls-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.friends {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.friends:hover {
+  background: #002060;
+}
+
+.friends img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.friends p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.friends span {
+  font-size: 12px;
+  color: #cfcfcf;
+}
