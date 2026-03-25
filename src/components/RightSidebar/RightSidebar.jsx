@@ -22,12 +22,12 @@ const RightSidebar = () => {
       <div className="rs-media">
         <p>Media</p>
         <div>
-          <img src={assets.gallery_icon} alt="" />
-          <img src={assets.gallery_icon} alt="" />
-          <img src={assets.gallery_icon} alt="" />
-          <img src={assets.gallery_icon} alt="" />
-          <img src={assets.gallery_icon} alt="" />
-          <img src={assets.gallery_icon} alt="" />
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic2} alt="" />
+          <img src={assets.pic3} alt="" />
+          <img src={assets.pic4} alt="" />
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic3} alt="" />
         </div>
       </div>
 
