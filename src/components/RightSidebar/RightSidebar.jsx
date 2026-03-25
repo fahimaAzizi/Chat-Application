@@ -30,7 +30,9 @@ const RightSidebar = () => {
           <img src={assets.pic3} alt="" />
         </div>
       </div>
-
+     <button>
+      Logout
+     </button>
     </div>
   )
 }
