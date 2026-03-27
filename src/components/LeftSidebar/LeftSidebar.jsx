@@ -11,6 +11,9 @@ const LeftSidebar = () => {
         <img src={assets.logo} className='logo' alt="" />
         <div className="menu">
           <img src={assets.menu_icon} alt="" />
+          <div className='sun-menu'>
+            <p>Edit profile</p>
+          </div>
         </div>
       </div>
 
