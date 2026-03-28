@@ -14,7 +14,7 @@ const ProfileUpdate = () => {
 
           <label htmlFor="avatar">
             <input onChange={(e)=>setImage(e.target.file[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden/>
-            <img src={assets.avatar_icon} alt="" />
+            <img src={ image? URL.createObjectURL(image) : assets.avatar_icon} alt="" />
             upload profile image
           </label>
 
