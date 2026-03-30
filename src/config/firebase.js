@@ -1,5 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 
 
