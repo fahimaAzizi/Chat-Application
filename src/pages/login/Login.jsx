@@ -2,9 +2,21 @@ import React, { useState } from 'react'
 import './Login.css'
 import assets from '../../assets/assets'
 
+
 const Login = () => {
 
   const [currState, setCurrState] = useState("Sign up")
+  const [userName, setUserName] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+const onSubmitHandler = async (event) => {
+  event.preventDefault();
+
+  if (currState === "Sign up") {
+    await signup(userName, email, password);
+  }
+};
 
   return (
     <div className='login'>
