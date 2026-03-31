@@ -40,7 +40,7 @@ const ProfileUpdate = () => {
           className='profile-pic'
           src={image ? URL.createObjectURL(image) : assets.logo_icon}
           alt=""
-        />/.;.p0000000
+        />
 
       </div>
     </div>
