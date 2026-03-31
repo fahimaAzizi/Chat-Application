@@ -44,3 +44,5 @@ const signup = async (username, email, password) => {
     console.log(error);
   }
 };
+
+export {signup}

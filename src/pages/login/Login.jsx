@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Login.css'
 import assets from '../../assets/assets'
+import { signup } from '../../config/firebase'
 
 
 const Login = () => {
@@ -27,7 +28,7 @@ const onSubmitHandler = async (event) => {
         <h2>{currState}</h2>
 
         {currState === "Sign up" && (
-          <input
+          <input onChange={(e)=>setUserName(e.target.value)} value={email}
             type="text"
             placeholder="Username"
             className="form-input"
@@ -36,6 +37,7 @@ const onSubmitHandler = async (event) => {
         )}
 
         <input
+        onChange={}
           type="email"
           placeholder="Email address"
           className="form-input"
