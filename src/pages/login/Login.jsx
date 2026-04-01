@@ -37,7 +37,7 @@ const onSubmitHandler = async (event) => {
         )}
 
         <input
-        onChange={}
+        onChange={(e)=>setEmail(e.target.value)} value={email}
           type="email"
           placeholder="Email address"
           className="form-input"
@@ -45,6 +45,7 @@ const onSubmitHandler = async (event) => {
         />
 
         <input
+        onChange={(e)=>setPassword(e.target.value)} value={password}
           type="password"
           placeholder="Password"
           className="form-input"
