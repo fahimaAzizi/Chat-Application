@@ -53,5 +53,14 @@ const signup = async (username, email, password) => {
     toast.error(error.code.split('/')[1].split('-').join(" "));
   }
  }
+ const logout = async() =>{
+  try {
+    await dignOut(auth)
+  } catch (error) {
+        console.error(error);
+    toast.error(error.code.split('/')[1].split('-').join(" "));
+    
+  }
+ }
 
-export {signup,login }
+export {signup,login,logout }
