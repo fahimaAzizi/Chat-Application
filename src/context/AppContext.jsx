@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
 import { db } from "../config/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export const AppContext = createContext();
 
-const AppContextProvider = (props) => {
+const AppContext = (props) => {
 
   const [userData, setUserData] = useState(null);
   const [chatData, setChatData] = useState(null);
@@ -13,10 +13,23 @@ const AppContextProvider = (props) => {
     try {
       const userRef = doc(db, "users", uid);
       const userSnap = await getDoc(userRef);
+      const userDats = userSnap.data()
 
-      if (userSnap.exists()) {
-        setUserData(userSnap.data());
+      if (userData.avatar && userData.name) {
+        navigate('/chat')
+      }else{
+        navigate('/profile')
       }
+      await updateDoc(userRef,{
+        lastSeen:Date.now()
+      })
+      setInterval(async () =>{
+        if (auth.chatUser) {
+            await updateDoc(userRef,{
+                lastSeen:Date.now
+            })
+        }
+      },60000)
 
     } catch (error) {
       console.log(error);
@@ -38,4 +51,4 @@ const AppContextProvider = (props) => {
   );
 };
 
-export default AppContextProvider;
+export default AppContext;
