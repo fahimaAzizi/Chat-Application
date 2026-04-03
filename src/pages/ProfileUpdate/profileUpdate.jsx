@@ -4,7 +4,7 @@ import assets from '../../assets/assets'
 
 const ProfileUpdate = () => {
 
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(null);
 
   return (
     <div className='profile'>

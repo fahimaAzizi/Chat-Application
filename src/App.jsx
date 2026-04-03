@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import ProfileUpdate from './pages/ProfileUpdate/profileUpdate'
 import Chat from './pages/Chat/Chat'   // ✅ FIXED
@@ -10,14 +10,16 @@ import {auth} from './config/firebase'
 import AppContext from './context/AppContext'
 
 const App = () => {
-  const navigate = useNavigate(AppContext);
+  const navigate = useNavigate();
+
 
   useEffect(()=>{
     onAuthStateChanged(auth, async (user)=> {
       if (user) {
    navigate('/chat')
+   await loadUserData(user.uid)
   
-      } else{
+      } else{ 
         navigate('/')
       }
     })
