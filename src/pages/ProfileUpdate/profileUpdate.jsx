@@ -12,17 +12,36 @@ const ProfileUpdate = () => {
   const [name,setName] = useState("");
   const [bio,setBio] = useState("");
   const [uid,setUid] = useState("");
+  const [prevImage,setPrevImage] = useState("");
+
+
+   const ProfileUpdate = async (event) =>{
+     event.preventDefault();
+     try {
+      if (!prevImage &&)
+     } catch (error) {
+      
+     }
+   }
 
   useEffect(()=>{
     onAuthStateChanged(auth,async (user)=>{
       if(user){
         setUid(user.uid)
         const docRef = doc(db ,"users", user.uid);
-        const docSanp= getDoc(docRef);
-        if (condition) {
-
+        const docSnap= getDoc(docRef);
+        if (docSnap.data().name) {
+          setName(docSnap.data().name);
         }
-
+         if (docSnap.data().bio) {
+          setBio(docSnap.data().bio);
+        }
+         if (docSnap.data().avatar) {
+          setPrevImage((await docSnap).data().avatar)
+        }
+      }
+      else{
+        
       }
     })
   })
@@ -31,7 +50,7 @@ const ProfileUpdate = () => {
     <div className='profile'>
       <div className="profile-container">
 
-        <form>
+        <form onSubmit={ProfileUpdate}>
           <h3>Profile Details</h3>
 
           <label htmlFor="avatar">
