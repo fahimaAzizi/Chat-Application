@@ -5,6 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 import { getDoc } from 'firebase/firestore';
 import { conditional } from 'firebase/firestore/pipelines';
+import { toast } from 'react-toastify';
 
 const ProfileUpdate = () => {
 
@@ -18,7 +19,9 @@ const ProfileUpdate = () => {
    const ProfileUpdate = async (event) =>{
      event.preventDefault();
      try {
-      if (!prevImage &&)
+      if (!prevImage && image) {
+        toast.error("upload profile picture")
+      }
      } catch (error) {
       
      }
