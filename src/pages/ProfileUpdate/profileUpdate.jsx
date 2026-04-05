@@ -3,8 +3,7 @@ import './ProfileUpdate.css'
 import assets from '../../assets/assets'
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebase';
-import { getDoc } from 'firebase/firestore';
-import { conditional } from 'firebase/firestore/pipelines';
+import { getDoc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 const ProfileUpdate = () => {
@@ -12,7 +11,7 @@ const ProfileUpdate = () => {
   const [image, setImage] = useState(false);
   const [name,setName] = useState("");
   const [bio,setBio] = useState("");
-  const [uid,setUid] = useState("");
+  const [uid ,setUid] = useState("");
   const [prevImage,setPrevImage] = useState("");
 
 
@@ -22,6 +21,13 @@ const ProfileUpdate = () => {
       if (!prevImage && image) {
         toast.error("upload profile picture")
       }
+      const imgUrl = await update(image);
+      setPrevImage(imgUrl)
+      await updateDoc(docRef,{
+        avatar:imgUrl,
+        bio:bio,
+        name:name
+      })
      } catch (error) {
       
      }
