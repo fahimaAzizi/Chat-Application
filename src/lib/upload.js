@@ -1,11 +1,10 @@
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { resolvePath } from "react-router-dom";
 
 
-const upload = async(file) => {
+const upload = async(file, callback) => {
 
     const storage = getStorage();
-    const storageRef = ref(storage, `images/${Data.now() + file.name}`);
+    const storageRef = ref(storage, `images/${Date.now() + file.name}`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -24,13 +23,13 @@ const upload = async(file) => {
                     break;
             }
         },
-        (error) => {
-            
+        (err) => {
+            console.error(err);
         },
         () => {
             
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                resolve(downloadURL)
+                callback(downloadURL)
             });
         }
     );

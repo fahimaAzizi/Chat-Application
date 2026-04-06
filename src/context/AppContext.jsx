@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState } from "react";
 import {  auth,db } from "../config/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -6,7 +7,7 @@ import App from "../App";
 
 export const AppContext = createContext();
 
-const AppContextProvider = (props) => {
+const AppContextProvider = () => {
   const navigate = useNavigate()
 
   const [userData, setUserData] = useState(null);
@@ -33,7 +34,7 @@ const AppContextProvider = (props) => {
                 lastSeen:Date.now()
             })
         }
-      }, 60000)
+      })
 
     } catch (error) {
       console.log(error);

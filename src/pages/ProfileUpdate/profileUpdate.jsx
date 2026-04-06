@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './ProfileUpdate.css'
 import assets from '../../assets/assets'
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../config/firebase';
-import { getDoc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../../config/firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 const ProfileUpdate = () => {
@@ -15,62 +15,57 @@ const ProfileUpdate = () => {
   const [prevImage,setPrevImage] = useState("");
 
 
-   const ProfileUpdate = async (event) =>{
-     event.preventDefault();
-     try {
-      if (!prevImage && image) {
-        toast.error("upload profile picture")
-      }
-      const docRef =doc(db,"users",uid);
-      if (image) {
-      const imgUrl = await update(image);
-      setPrevImage(imgUrl)
-      await updateDoc(docRef,{
-        avatar:imgUrl,
-        bio:bio,
-        name:name
-      })
-      }
-      else{
-         await updateDoc(docRef,{
+   const handleProfileUpdate = async (event) =>{
+      event.preventDefault();
+      try {
+       if (!prevImage && image) {
+         toast.error("upload profile picture")
+         return;
+       }
+       const docRef =doc(db,"users",uid);
+       const imgUrl = image ? URL.createObjectURL(image).split('/').pop() : prevImage;
+       setPrevImage(imgUrl)
        
-        bio:bio,
-        name:name
-         })
-      }
+       await updateDoc(docRef,{
+         avatar:imgUrl,
+         bio:bio,
+         name:name
+       })
 
-     } catch (error) {
-      
-     }
-   }
+       toast.success("Profile updated!")
+
+      } catch (err) {
+       console.error(err);
+       toast.error("Failed to update profile")
+      }
+    }
 
   useEffect(()=>{
     onAuthStateChanged(auth,async (user)=>{
       if(user){
         setUid(user.uid)
         const docRef = doc(db ,"users", user.uid);
-        const docSnap= getDoc(docRef);
-        if (docSnap.data().name) {
-          setName(docSnap.data().name);
+        const docSnap= await getDoc(docRef);
+        if (docSnap.exists()) {
+          if (docSnap.data().name) {
+            setName(docSnap.data().name);
+          }
+          if (docSnap.data().bio) {
+            setBio(docSnap.data().bio);
+          }
+          if (docSnap.data().avatar) {
+            setPrevImage(docSnap.data().avatar)
+          }
         }
-         if (docSnap.data().bio) {
-          setBio(docSnap.data().bio);
-        }
-         if (docSnap.data().avatar) {
-          setPrevImage((await docSnap).data().avatar)
-        }
-      }
-      else{
-        
       }
     })
-  })
+  }, [])
 
   return (
     <div className='profile'>
       <div className="profile-container">
 
-        <form onSubmit={ProfileUpdate}>
+        <form onSubmit={handleProfileUpdate}>
           <h3>Profile Details</h3>
 
           <label htmlFor="avatar">
