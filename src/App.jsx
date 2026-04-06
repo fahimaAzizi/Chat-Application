@@ -16,8 +16,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        await loadUserData(user.uid);
-        navigate('/chat');
+        await loadUserData(user.uid); // ✅ ONLY THIS
       } else {
         navigate('/');
       }
