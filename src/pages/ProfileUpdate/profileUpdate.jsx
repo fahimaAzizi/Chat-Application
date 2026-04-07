@@ -14,39 +14,44 @@ const ProfileUpdate = () => {
   const [uid ,setUid] = useState("");
   const [prevImage,setPrevImage] = useState("");
 
+const handleProfileUpdate = async (event) =>{
+  event.preventDefault();
+  try {
 
-   const handleProfileUpdate = async (event) =>{
-      event.preventDefault();
-      try {
-        
-       if (!prevImage && image) {
-         toast.error("upload profile picture")
-         return;
-       }
-       const docRef =doc(db,"users",uid);
-       if (imaage)  {
-       const imgUrl = image ? URL.createObjectURL(image).split('/').pop() : prevImage;
-       setPrevImage(imgUrl)
-       
-       await updateDoc(docRef,{
-         avatar:imgUrl,
-         bio:bio,
-         name:name
-       })
-      }
-      else{
-         await updateDoc(docRef,{
-         bio:bio,
-         name:name
-         })
-      }
-       toast.success("Profile updated!")
-
-      } catch (err) {
-       console.error(err);
-       toast.error("Failed to update profile")
-      }
+    if (!prevImage && !image) {
+      toast.error("upload profile picture")
+      return;
     }
+
+    const docRef = doc(db,"users",uid);
+
+    if (image) {   // ✅ FIXED spelling
+
+      // ❗ TEMP FIX (still not real upload)
+      const imgUrl = URL.createObjectURL(image);
+
+      setPrevImage(imgUrl);
+
+      await updateDoc(docRef,{
+        avatar: imgUrl,
+        bio: bio,
+        name: name
+      })
+
+    } else {
+      await updateDoc(docRef,{
+        bio: bio,
+        name: name
+      })
+    }
+
+    toast.success("Profile updated!")
+
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to update profile")
+  }
+}
 
   useEffect(()=>{
     onAuthStateChanged(auth,async (user)=>{
