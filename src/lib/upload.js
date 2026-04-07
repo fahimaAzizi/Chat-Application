@@ -1,19 +1,20 @@
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
+const upload = async (file, callback) => {
 
-const upload = async(file, callback) => {
+    if (!file) return; // ✅ FIX
 
     const storage = getStorage();
     const storageRef = ref(storage, `images/${Date.now() + file.name}`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-
     uploadTask.on('state_changed',
         (snapshot) => {
-            
+
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
+
             switch (snapshot.state) {
                 case 'paused':
                     console.log('Upload is paused');
@@ -27,14 +28,12 @@ const upload = async(file, callback) => {
             console.error(err);
         },
         () => {
-            
+
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                callback(downloadURL)
+                if (callback) callback(downloadURL); // ✅ FIX
             });
         }
     );
+};
 
-
-}
-export default upload
-
+export default upload;
