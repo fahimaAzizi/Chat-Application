@@ -18,11 +18,13 @@ const ProfileUpdate = () => {
    const handleProfileUpdate = async (event) =>{
       event.preventDefault();
       try {
+        
        if (!prevImage && image) {
          toast.error("upload profile picture")
          return;
        }
        const docRef =doc(db,"users",uid);
+       if (imaage)  {
        const imgUrl = image ? URL.createObjectURL(image).split('/').pop() : prevImage;
        setPrevImage(imgUrl)
        
@@ -31,7 +33,13 @@ const ProfileUpdate = () => {
          bio:bio,
          name:name
        })
-
+      }
+      else{
+         await updateDoc(docRef,{
+         bio:bio,
+         name:name
+         })
+      }
        toast.success("Profile updated!")
 
       } catch (err) {
