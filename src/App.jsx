@@ -22,7 +22,7 @@ const App = () => {
       }
     });
     return () => unsubscribe();
-  }, [navigate, loadUserData]);
+  }, []);
 
   return (
     <>
