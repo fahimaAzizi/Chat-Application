@@ -34,7 +34,7 @@ const AppContextProvider = () => {
                 lastSeen:Date.now()
             })
         }
-      })
+      },60000)
 
     } catch (error) {
       console.log(error);
