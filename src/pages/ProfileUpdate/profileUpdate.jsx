@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ProfileUpdate.css'
 import assets from '../../assets/assets'
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../../config/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const ProfileUpdate = () => {
+
+  const navigate = useNavigate();
 
   const [image, setImage] = useState(false);
   const [name,setName] = useState("");
   const [bio,setBio] = useState("");
   const [uid ,setUid] = useState("");
   const [prevImage,setPrevImage] = useState("");
+  const {setUserData} =useContext(AppContext)
+
+  const ProfileUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      if (!prevImage && image) {
+
+      }
+    } catch (error) {
+      
+    }
+  }
 
 const handleProfileUpdate = async (event) =>{
   event.preventDefault();
@@ -45,7 +61,9 @@ const handleProfileUpdate = async (event) =>{
       })
     }
 
-    toast.success("Profile updated!")
+   const snap = await getDoc(docRef);
+   setUserData(snap.data());
+   navigate('/chat');
 
   } catch (err) {
     console.error(err);
@@ -69,6 +87,9 @@ const handleProfileUpdate = async (event) =>{
           if (docSnap.data().avatar) {
             setPrevImage(docSnap.data().avatar)
           }
+        }
+        else{
+           navigate('/')
         }
       }
     })
