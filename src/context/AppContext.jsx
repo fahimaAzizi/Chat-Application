@@ -40,35 +40,7 @@ const AppContextProvider = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-  if (userData) {
-    const chatRef = doc(db, 'chats', userData.id);
-
-    const unSub = onSnapshot(chatRef, async (res) => {
-      const chatItems = res.data()?.chatsData || [];
-
-      const tempData = await Promise.all(
-        chatItems.map(async (item) => {
-          const userRef = doc(db, 'users', item.rId);
-          const userSnap = await getDoc(userRef);
-          const userData = userSnap.data();
-
-          return { ...item, userData };
-        })
-      );
-
-      setChatData(
-        tempData.sort(
-          (a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0)
-        )
-      );
-    });
-
-    return () => {
-      unSub();
-    };
-  }
-}, [userData]);
+  
 
   const value = {
     userData,

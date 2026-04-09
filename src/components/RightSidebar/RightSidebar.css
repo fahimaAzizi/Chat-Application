@@ -3,7 +3,7 @@
     background:#001030;
     position: relative;
     height: 75vh;
-    overflow-y: scroll;
+   
 }
 
 .rs-profile{
@@ -40,14 +40,33 @@
 
 .rs-media{
     padding: 0px 20px;
-    font-size: 13px;
+    font-size: 15px 0px;
 }
 
 .rs-media div{
     max-height: 180px;
-    overflow-y: scroll;
+   overflow-y:scroll;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:   1fr 1fr 1fr;
     gap: 5px;
     margin-top: 8px;
+}
+.rs-media div img{
+    width: 60px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.rs button{
+    position:absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: none;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 10px 65px;
+    border-radius: 20px;
+    cursor: pointer;
+
 }

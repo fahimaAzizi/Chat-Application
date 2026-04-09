@@ -13,6 +13,8 @@ const LeftSidebar = () => {
           <img src={assets.menu_icon} alt="" />
           <div className='sun-menu'>
             <p>Edit profile</p>
+            <hr />
+            <p>Logout</p>
           </div>
         </div>
       </div>

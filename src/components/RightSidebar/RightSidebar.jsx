@@ -22,7 +22,7 @@ const RightSidebar = () => {
       {/* Media Section */}
       <div className="rs-media">
         <p>Media</p>
-        <div>
+        <div className='rs-img'>
           <img src={assets.pic1} alt="" />
           <img src={assets.pic2} alt="" />
           <img src={assets.pic3} alt="" />
@@ -31,7 +31,7 @@ const RightSidebar = () => {
           <img src={assets.pic3} alt="" />
         </div>
       </div>
-     <button onClick={()=>logout()}>
+     <button onClick={()=>logout()} className=''>
       Logout
      </button>
     </div>
