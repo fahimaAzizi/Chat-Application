@@ -51,8 +51,11 @@
 
 /* Friends List */
 .ls-list {
-  flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  overflow-y: scroll;
+
 }
 
 .friends {
@@ -88,7 +91,7 @@
 .friends:hover span{
   color: white;
 }
-.is-nav .menu{
+.ls-nav .menu{
   position: relative;
   padding: 10px 0px;
 }
@@ -115,5 +118,5 @@
   font-size: 14px;
 }
 .menu:hover .sub-menu{
-  display:block;
+  display: block;
 }
