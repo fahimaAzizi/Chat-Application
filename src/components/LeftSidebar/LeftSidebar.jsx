@@ -1,8 +1,41 @@
 import React from 'react'
 import assets from '../../assets/assets'
 import './LeftSidebar.css'
+import { useNavigate } from 'react-router-dom';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const LeftSidebar = () => {
+   const navigate = useNavigate();
+
+  const inputHandler = async (e) => {
+    try {
+      const input = e.target.value;
+
+      // Reference to users collection
+      const userRef = collection(db, "users");
+
+      // Query: match username (lowercase)
+      const q = query(
+        userRef,
+        where("username", "==", input.toLowerCase())
+      );
+
+      // Get data
+      const querySnap = await getDocs(q);
+
+      // Check if user exists
+      if (!querySnap.empty) {
+        console.log(querySnap.docs[0].data());
+      } else {
+        console.log("User not found");
+      }
+
+    } catch (error) {
+      console.error("Error searching user:", error);
+    }
+  }
+  
   return (
     <div className='ls'>
      <div className='ls-top'>
