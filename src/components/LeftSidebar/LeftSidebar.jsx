@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import assets from '../../assets/assets'
 import './LeftSidebar.css'
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { AppContext } from '../../context/AppContext';
 
 const LeftSidebar = () => {
    const navigate = useNavigate();
+   const {userData} = useContext(AppContext);
 
+   
   const inputHandler = async (e) => {
     try {
       const input = e.target.value;
