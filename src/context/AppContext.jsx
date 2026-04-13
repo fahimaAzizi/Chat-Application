@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import {  auth,db } from "../config/firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import App from "../App";
 
