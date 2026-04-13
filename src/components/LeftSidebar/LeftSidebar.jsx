@@ -29,6 +29,8 @@ const LeftSidebar = () => {
 
       if (!querySnap.empty && querySnap.docs[0].data().id !== userData.id) {
       setUser(querySnap.docs[0].data());
+      }else{
+        setUser(null);
       }
 
 
@@ -62,14 +64,22 @@ const LeftSidebar = () => {
       </div>
       {/* Friends List */}
       <div className="ls-list">
-        {Array(12).fill("").map((item, index) => (
+      {showSearch && user ? 
+      <div className='friend add-user'><img src={user.avatar} alt="" />
+      <p>{user.name}</p>
+
+      </div>
+      :
+      Array(12).fill("").map((item, index) => (
           <div key={index} className="friends">
             <img src={assets.profile_img} alt="" />
             <div>
               <p>Richard Sanford</p>
               <span>Hello , how are you?</span>
             </div>
-          </div>
+          </div> 
+     
+        
         ))}
 
       </div>
