@@ -39,9 +39,30 @@ const LeftSidebar = () => {
     
     }
   }
-  const addhat = async () =>{
-    const 
+ const addChat = async () => {
+  const messagesRef = collection(db,"messages");
+  const chatsRef = collection(db,"chats");
+  try {
+    const newMessageRef = doc(messagesRef);
+
+    await setDoc(newMessageRef,{
+      createAt:serverTimestamp(),
+      messages:[]
+    })
+
+    await updateDoc(doc(chatsRef,user.id),{
+      chatsData:arrayUnion({
+        messageId:newMessageRef.id,
+        lastMessage:"",
+        rId:userData.id,
+        updatedAt:Date.now(),
+        messageSeen:true
+      })
+    })
+  } catch (error) {
+    
   }
+}
 
   return (
     <div className='ls'>
