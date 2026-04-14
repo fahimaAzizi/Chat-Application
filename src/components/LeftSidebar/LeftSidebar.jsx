@@ -32,12 +32,15 @@ const LeftSidebar = () => {
       }else{
         setUser(null);
       }
-
-
-
+      else{
+        setShowSearch(false);
+      }
     } catch (error) {
-      console.error("Error searching user:", error);
+    
     }
+  }
+  const addhat = async () =>{
+    const 
   }
 
   return (
