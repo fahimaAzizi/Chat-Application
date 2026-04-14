@@ -60,7 +60,8 @@ const LeftSidebar = () => {
       })
     })
   } catch (error) {
-    
+    toast.error(error.message);
+    console.error(error)
   }
 }
 
