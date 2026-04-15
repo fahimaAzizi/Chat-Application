@@ -2,21 +2,28 @@ import React, { useContext, useState } from 'react'
 import assets from '../../assets/assets'
 import './LeftSidebar.css'
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, updateDoc, serverTimestamp, arrayUnion } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { AppContext } from '../../context/AppContext';
+import { toast } from "react-toastify";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
   const { userData } = useContext(AppContext);
-  const [user, setUser] = useState(null)
+
+  const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
-
-
+  // 🔍 Search User
   const inputHandler = async (e) => {
     try {
       const input = e.target.value;
+
+      if (!input) {
+        setShowSearch(false);
+        setUser(null);
+        return;
+      }
 
       const userRef = collection(db, "users");
 
@@ -28,42 +35,64 @@ const LeftSidebar = () => {
       const querySnap = await getDocs(q);
 
       if (!querySnap.empty && querySnap.docs[0].data().id !== userData.id) {
-      setUser(querySnap.docs[0].data());
-      }else{
+        setUser(querySnap.docs[0].data());
+        setShowSearch(true);
+      } else {
         setUser(null);
-      }
-      else{
         setShowSearch(false);
       }
+
     } catch (error) {
-    
+      console.error(error);
     }
-  }
- const addChat = async () => {
-  const messagesRef = collection(db,"messages");
-  const chatsRef = collection(db,"chats");
-  try {
-    const newMessageRef = doc(messagesRef);
+  };
 
-    await setDoc(newMessageRef,{
-      createAt:serverTimestamp(),
-      messages:[]
-    })
+  // ➕ Add Chat
+  const addChat = async () => {
+    if (!user) return;
 
-    await updateDoc(doc(chatsRef,user.id),{
-      chatsData:arrayUnion({
-        messageId:newMessageRef.id,
-        lastMessage:"",
-        rId:userData.id,
-        updatedAt:Date.now(),
-        messageSeen:true
-      })
-    })
-  } catch (error) {
-    toast.error(error.message);
-    console.error(error)
-  }
-}
+    const messagesRef = collection(db, "messages");
+    const chatsRef = collection(db, "chats");
+
+    try {
+      const newMessageRef = doc(messagesRef);
+
+      await setDoc(newMessageRef, {
+        createAt: serverTimestamp(),
+        messages: []
+      });
+
+      // current user chat
+      await updateDoc(doc(chatsRef, userData.id), {
+        chatsData: arrayUnion({
+          messageId: newMessageRef.id,
+          lastMessage: "",
+          rId: user.id,
+          updatedAt: Date.now(),
+          messageSeen: true
+        })
+      });
+
+      // other user chat
+      await updateDoc(doc(chatsRef, user.id), {
+        chatsData: arrayUnion({
+          messageId: newMessageRef.id,
+          lastMessage: "",
+          rId: userData.id,
+          updatedAt: Date.now(),
+          messageSeen: false
+        })
+      });
+
+      toast.success("Chat added successfully");
+      setShowSearch(false);
+      setUser(null);
+
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    }
+  };
 
   return (
     <div className='ls'>
@@ -73,44 +102,47 @@ const LeftSidebar = () => {
           <div className="menu">
             <img src={assets.menu_icon} alt="" />
             <div className='sub-menu'>
-              <p>Edit profile</p>
+              <p onClick={() => navigate('/profile')}>Edit profile</p>
               <hr />
               <p>Logout</p>
             </div>
           </div>
         </div>
 
-
-        {/* Search */}
+        {/* 🔍 Search */}
         <div className="ls-search">
           <img src={assets.search_icon} alt="" />
-          <input type="text" placeholder='Search here..' />
+          <input 
+            type="text" 
+            placeholder='Search here..' 
+            onChange={inputHandler}
+          />
         </div>
       </div>
-      {/* Friends List */}
+
+      {/* 👥 List */}
       <div className="ls-list">
-      {showSearch && user ? 
-      <div className='friend add-user'><img src={user.avatar} alt="" />
-      <p>{user.name}</p>
 
-      </div>
-      :
-      Array(12).fill("").map((item, index) => (
-          <div key={index} className="friends">
-            <img src={assets.profile_img} alt="" />
-            <div>
-              <p>Richard Sanford</p>
-              <span>Hello , how are you?</span>
+        {showSearch && user ? (
+          <div className='friend add-user' onClick={addChat}>
+            <img src={user.avatar} alt="" />
+            <p>{user.name}</p>
+          </div>
+        ) : (
+          Array(12).fill("").map((_, index) => (
+            <div key={index} className="friends">
+              <img src={assets.profile_img} alt="" />
+              <div>
+                <p>Richard Sanford</p>
+                <span>Hello, how are you?</span>
+              </div>
             </div>
-          </div> 
-     
-        
-        ))}
+          ))
+        )}
 
       </div>
-
     </div>
   )
 }
 
-export default LeftSidebar
+export default LeftSidebar;
