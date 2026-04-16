@@ -38,11 +38,13 @@ const LeftSidebar = () => {
         let userExist = false
         chatsData.map((user)=>{
           if (user.rId === querySnap.docs[0].data().id){
-            
+            userExist = true;
           }
         })
-        setUser(querySnap.docs[0].data());
-        setShowSearch(true);
+        if (!userExist){
+          setUser(querySnap.docs[0].data());
+        }
+        
       } else {
         setUser(null);
         setShowSearch(false);
