@@ -35,6 +35,12 @@ const LeftSidebar = () => {
       const querySnap = await getDocs(q);
 
       if (!querySnap.empty && querySnap.docs[0].data().id !== userData.id) {
+        let userExist = false
+        chatsData.map((user)=>{
+          if (user.rId === querySnap.docs[0].data().id){
+            
+          }
+        })
         setUser(querySnap.docs[0].data());
         setShowSearch(true);
       } else {
