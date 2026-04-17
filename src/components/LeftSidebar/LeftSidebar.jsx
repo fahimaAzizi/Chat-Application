@@ -15,7 +15,9 @@ const LeftSidebar = () => {
 
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
-
+  const [messagesId,setMessagesId] = useState(null)
+  const [messages,setMessages] = useState([])
+   const [chatUser, setchatUser] = useState(null)
   // 🔍 Search User
   const inputHandler = async (e) => {
     try {
