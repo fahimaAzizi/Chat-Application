@@ -1,16 +1,29 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ChatBox.css'
 import assets from '../../assets/assets'
 import { AppContext } from '../../context/AppContext'
+import { onSnapshot } from 'firebase/firestore'
 
 const ChatBox = () => {
-  const {userData,messagesId,chatUser,messages,setMeddages} = useContext(AppContext);
+  const {userData,messagesId,chatUser,messages,setMessages} = useContext(AppContext);
   const [input,setInput] =useState("");
+   
+  useEffect(()=>{
+    if (messagesId) {
+      const unsub = onSnapshot(doc(db, 'messages', messagesId),(res)=>{
+        setMessages(res.data().messages.revers())
+        
+      })
+    }
+  })
+
+
+
   return (
     <div className='chat-box'>
       <div className="chat-user">
         <img src={chatUser.userData.avatar} alt="" />
-        <p>Richard Sanford <img className='dot' src={assets.green_dot} alt="" /></p>
+        <p>{chatUser.userData.name}<img className='dot' src={assets.green_dot} alt="" /></p>
         <img src={assets.help_icon} className='help' alt="" />
       </div>
       <div className="chat-msg">
