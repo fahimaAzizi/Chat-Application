@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import './ChatBox.css'
 import assets from '../../assets/assets'
+import { AppContext } from '../../context/AppContext'
 
 const ChatBox = () => {
+  const {userData,messagesId,chatUser,messages,setMeddages} = useContext(AppContext);
+  const [input,setInput] =useState("");
   return (
     <div className='chat-box'>
       <div className="chat-user">
-        <img src={assets.profile_img} alt="" />
+        <img src={chatUser.userData.avatar} alt="" />
         <p>Richard Sanford <img className='dot' src={assets.green_dot} alt="" /></p>
         <img src={assets.help_icon} className='help' alt="" />
       </div>
