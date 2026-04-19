@@ -32,10 +32,13 @@ const ChatBox = () => {
     if (messagesId) {
       const unsub = onSnapshot(doc(db, 'messages', messagesId),(res)=>{
         setMessages(res.data().messages.revers())
-        
+        console.log(res.data().messages.revers());
       })
+      return ()=>{
+        unsub();
+      }
     }
-  })
+  },[messagesId])
 
 
 
