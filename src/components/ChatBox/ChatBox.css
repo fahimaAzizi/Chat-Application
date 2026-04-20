@@ -4,6 +4,22 @@
     background-color: #f1f5ff;
 }
 
+.msg-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.s-msg .msg-image {
+    border: 2px solid #077EFF;
+}
+
+.r-msg .msg-image {
+    border: 2px solid #e5e5e5;
+}
+
 .chat-user{
     padding: 10px 15px;
     display: flex;

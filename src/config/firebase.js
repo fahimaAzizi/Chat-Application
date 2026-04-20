@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { toast } from "react-toastify";
 
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const signup = async (username, email, password) => {
   try {
@@ -62,4 +64,4 @@ const logout = async () => {
 };
 
 // ✅ IMPORTANT FIX
-export { auth, db, signup, login, logout };
+export { auth, db, storage, signup, login, logout };

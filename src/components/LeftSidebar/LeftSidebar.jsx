@@ -149,16 +149,18 @@ const setChat = async (item) => {
             <img src={user.avatar} alt="" />
             <p>{user.name}</p>
           </div>
-        ) : (
-      chatData?.map((item, index) => (
-  <div onClick={() => setChat(item)} key={index} className="friends">
+) : (
+      chatData?.filter((item, index, self) => 
+        index === self.findIndex((t) => t.userData?.id === item.userData?.id)
+      ).map((item, index) => (
+  <div onClick={() => setChat(item)} key={item.messageId || index} className="friends">
     <img src={item.userData?.avatar} alt="" />
     <div>
       <p>{item.userData?.name}</p>
       <span>{item.lastMessage}</span>
     </div>
   </div>
-))
+  ))
         )}
 
       </div>
