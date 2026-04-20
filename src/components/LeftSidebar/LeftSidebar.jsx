@@ -11,13 +11,11 @@ const LeftSidebar = () => {
   const navigate = useNavigate();
 
   // ✅ get chatData also
-  const { userData, chatData } = useContext(AppContext);
+  const { userData, chatData, setMessagesId, setchatUser } = useContext(AppContext);
 
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
-  const [messagesId,setMessagesId] = useState(null)
-  const [messages,setMessages] = useState([])
-   const [chatUser, setchatUser] = useState(null)
+ 
   // 🔍 Search User
   const inputHandler = async (e) => {
     try {
@@ -99,6 +97,10 @@ const LeftSidebar = () => {
 
       toast.success("Chat added");
       setShowSearch(false);
+      
+      setMessagesId(newMessageRef.id);
+      setchatUser({ userData: user });
+      
       setUser(null);
 
     } catch (error) {
@@ -107,8 +109,10 @@ const LeftSidebar = () => {
     }
   };
 
-  const setChat = async (item) =>{
-    
+const setChat = async (item) => {
+    if (!item.messageId) return;
+    setMessagesId(item.messageId);
+    setchatUser(item);
   }
 
   return (
@@ -146,15 +150,15 @@ const LeftSidebar = () => {
             <p>{user.name}</p>
           </div>
         ) : (
-          chatData?.map((item, index) => (
-            <div onClick={()=>setChat()} key={index} className="friends">
-              <img src={item.userData?.avatar} alt="" />
-              <div>
-                <p>{item.userData?.name}</p>
-                <span>{item.lastMessage}</span>
-              </div>
-            </div>
-          ))
+      chatData?.map((item, index) => (
+  <div onClick={() => setChat(item)} key={index} className="friends">
+    <img src={item.userData?.avatar} alt="" />
+    <div>
+      <p>{item.userData?.name}</p>
+      <span>{item.lastMessage}</span>
+    </div>
+  </div>
+))
         )}
 
       </div>

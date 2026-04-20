@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import './ChatBox.css'
 import assets from '../../assets/assets'
 import { AppContext } from '../../context/AppContext'
-import { arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { arrayUnion, doc, onSnapshot, updateDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import { toast } from 'react-toastify'
 
 const ChatBox = () => {
   const { userData, messagesId, chatUser, messages, setMessages } = useContext(AppContext);
+  
   const [input, setInput] = useState("");
 
   const sendMessage = async () => {
@@ -46,7 +48,7 @@ userIDs.forEach(async (id) => {
 });
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   };
 
@@ -66,10 +68,10 @@ userIDs.forEach(async (id) => {
 
       {/* Header */}
       <div className="chat-user">
-        <img src={chatUser?.userData?.avatar || assets.profile_img} alt="" />
+        <img src={chatUser.userData.avatar} alt="" />
         <p>
-          {chatUser?.userData?.name}
-          <img className='dot' src={assets.green_dot} alt="" />
+          {chatUser.userData.name}
+        
         </p>
         <img src={assets.help_icon} className='help' alt="" />
       </div>
@@ -95,16 +97,16 @@ userIDs.forEach(async (id) => {
         <label htmlFor="image">
           <img src={assets.gallery_icon} alt="" />
         </label>
-        <img src={assets.send_button} alt="" onClick={sendMessage} />
+        <img onClick={sendMessage} src={assets.send_button} alt="" />
       </div>
 
     </div>
-  ) : (
+  ) : 
     <div className='chat-welcome'>
       <img src={assets.logo_icon} alt="" />
       <p>chat anytime, anywhere</p>
     </div>
-  );
+  
 }
 
 export default ChatBox;
