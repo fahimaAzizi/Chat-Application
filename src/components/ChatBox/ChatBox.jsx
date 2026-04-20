@@ -14,10 +14,13 @@ const ChatBox = () => {
   const sendMessage = async () => {
     try {
       if (input && messagesId) {
+        const text = input;
+        setInput("");
+        
         await updateDoc(doc(db, 'messages', messagesId), {
           messages: arrayUnion({
             sId: userData.id,
-            text: input,
+            text: text,
             createdAt: new Date()
           })
         });
@@ -34,7 +37,7 @@ userIDs.forEach(async (id) => {
       (c) => c.messageId === messagesId
     );
 
-    userChatData.chatsData[chatIndex].lastMessage = input.slice(0, 30);
+    userChatData.chatsData[chatIndex].lastMessage = text.slice(0, 30);
     userChatData.chatsData[chatIndex].updatedAt = Date.now();
 
     if (userChatData.chatsData[chatIndex].rId === userData.id) {
