@@ -25,11 +25,6 @@ function Chat() {
         <RightSidebar />
         </div>
       }
-      
-        
-        
-
-      
     </div>
   )
   
