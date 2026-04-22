@@ -110,10 +110,26 @@ const LeftSidebar = () => {
   };
 
 const setChat = async (item) => {
-    if (!item.messageId) return;
-    setMessagesId(item.messageId);
-    setchatUser(item);
+  setMessagesId(item.messageId);
+  setChatUser(item);
+
+  const userChatsRef = doc(db, 'chats', userData.id);
+  const userChatsSnapshot = await getDoc(userChatsRef);
+
+  const userChatsData = userChatsSnapshot.data();
+
+  const chatIndex = userChatsData.chatsData.findIndex(
+    (c) => c.messageId === item.messageId
+  );
+
+  if (chatIndex !== -1) {
+    userChatsData.chatsData[chatIndex].messageSeen = true;
+
+    await updateDoc(userChatsRef, {
+      chatsData: userChatsData.chatsData
+    });
   }
+};
 
   return (
     <div className='ls'>
