@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './RightSidebar.css'
 import assets from '../../assets/assets'
 import { logout } from '../../config/firebase'
+import { AppContext } from '../../context/AppContext'
 
 const RightSidebar = () => {
+  const { chatUser } = useContext(AppContext);
+
   return (
     <div className='rs'>
-
       {/* Profile Section */}
       <div className="rs-profile">
-        <img src={assets.profile_img} alt="" />
+        <img src={chatUser?.userData?.avatar || assets.profile_img} alt="" />
         <h3>
-          Richard Sanford 
-          <img src={assets.green_dot} className='dot' alt="" />
+          {chatUser?.userData?.name || 'Select a friend'}
+          {chatUser?.userData?.name && <img src={assets.green_dot} className='dot' alt="" />}
         </h3>
-        <p>Hey, There i am Richard Sanford using chat app</p>
+        <p>{chatUser?.userData?.bio || 'Hey, There i am using chat app'}</p>
       </div>
 
       <hr />
