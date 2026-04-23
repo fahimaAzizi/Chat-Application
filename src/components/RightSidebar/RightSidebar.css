@@ -56,6 +56,13 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.no-media{
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.7;
+    padding: 20px 0;
+}
 .rs button{
     position:absolute;
     bottom: 20px;

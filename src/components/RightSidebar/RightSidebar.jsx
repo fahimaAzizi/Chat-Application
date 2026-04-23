@@ -5,7 +5,10 @@ import { logout } from '../../config/firebase'
 import { AppContext } from '../../context/AppContext'
 
 const RightSidebar = () => {
-  const { chatUser } = useContext(AppContext);
+  const { chatUser, messages, messagesId } = useContext(AppContext);
+
+  // Filter only image messages
+  const imageMessages = messages?.filter(msg => msg.type === 'image') || [];
 
   return (
     <div className='rs'>
@@ -23,14 +26,15 @@ const RightSidebar = () => {
 
       {/* Media Section */}
       <div className="rs-media">
-        <p>Media</p>
+        <p>Media ({imageMessages.length})</p>
         <div className='rs-img'>
-          <img src={assets.pic1} alt="" />
-          <img src={assets.pic2} alt="" />
-          <img src={assets.pic3} alt="" />
-          <img src={assets.pic4} alt="" />
-          <img src={assets.pic1} alt="" />
-          <img src={assets.pic3} alt="" />
+          {imageMessages.length > 0 ? (
+            imageMessages.map((msg, index) => (
+              <img key={index} src={msg.text} alt="shared image" />
+            ))
+          ) : (
+            <p className='no-media'>No images shared yet</p>
+          )}
         </div>
       </div>
      <button onClick={()=>logout()} className=''>
