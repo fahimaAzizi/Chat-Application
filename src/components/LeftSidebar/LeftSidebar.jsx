@@ -156,7 +156,7 @@ const LeftSidebar = () => {
           <img src={assets.logo} className='logo' alt="" />
           <div className="menu">
             <img src={assets.menu_icon} alt="" />
-            <div className='sub-menu'>
+            <div className=' sub-menu'>
               <p onClick={() => navigate('/profile')}>Edit profile</p>
               <hr />
               <p>Logout</p>
@@ -167,9 +167,9 @@ const LeftSidebar = () => {
         {/* 🔍 Search */}
         <div className="ls-search">
           <img src={assets.search_icon} alt="" />
-          <input 
-            type="text" 
-            placeholder='Search here..' 
+          <input
+            type="text"
+            placeholder='Search here..'
             onChange={inputHandler}
           />
         </div>
@@ -177,28 +177,33 @@ const LeftSidebar = () => {
 
       {/* 👥 List */}
       <div className="ls-list">
-
         {showSearch && user ? (
           <div className='friend add-user' onClick={addChat}>
             <img src={user.avatar} alt="" />
             <p>{user.name}</p>
           </div>
         ) : (
-          chatData?.map((item, index) => (
-            <div 
-              onClick={() => setChat(item)} 
-              key={item.messageId || index} 
-              className="friends"
-            >
-              <img src={item.userData?.avatar || assets.profile_img} alt="" />
-              <div>
-                <p>{item.userData?.name}</p>
-                <span>{item.lastMessage}</span>
-              </div>
-            </div>
-          ))
+          <>
+            {chatData
+              ?.filter((item, index, self) =>
+                index === self.findIndex((t) => t.rId === item.rId)
+              )
+              .sort((a, b) => b.updatedAt - a.updatedAt)
+              .map((item) => (
+                <div
+                  onClick={() => setChat(item)}
+                  key={item.messageId}
+                  className="friends"
+                >
+                  <img src={item.userData?.avatar || assets.profile_img} alt="" />
+                  <div>
+                    <p>{item.userData?.name}</p>
+                    <span>{item.lastMessage}</span>
+                  </div>
+                </div>
+              ))}
+          </>
         )}
-
       </div>
     </div>
   )
