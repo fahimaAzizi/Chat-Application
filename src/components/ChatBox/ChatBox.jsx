@@ -119,38 +119,66 @@ const ChatBox = () => {
     }
   }, [messagesId]);
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
+   const handleKeyPress = (e) => {
+     if (e.key === 'Enter' && !e.shiftKey) {
+       e.preventDefault();
+       sendMessage();
+     }
+   };
 
-  return messagesId ? (
-    <div className='chat-box'>
+   const formatTime = (timestamp) => {
+     // Handle Firestore Timestamp or JavaScript Date
+     const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
+     return date.toLocaleTimeString('en-US', {
+       hour: 'numeric',
+       minute: '2-digit',
+       hour12: true
+     });
+   };
 
-      {/* Header */}
-      <div className="chat-user">
-        <img src={chatUser.userData.avatar} alt="" />
-        <p>
-          {chatUser.userData.name}
-        </p>
-        <img src={assets.help_icon} className='help' alt="" />
-      </div>
+   const formatMessageTime = (timestamp) => {
+     const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
+     const now = new Date();
+     const diffMs = now - date;
+     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-      {/* Messages */}
-      <div className="chat-msg">
-        {messages?.map((msg, index) => (
-          <div key={index} className={msg.sId === userData.id ? "s-msg" : "r-msg"}>
-            {msg.type === "image" ? (
-              <img src={msg.text} alt="image" className="msg-image" />
-            ) : (
-              <p className="msg">{msg.text}</p>
-            )}
-          </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+     if (diffDays === 0) {
+       return formatTime(timestamp);
+     } else if (diffDays === 1) {
+       return `Yesterday ${formatTime(timestamp)}`;
+     } else if (diffDays < 7) {
+       return date.toLocaleDateString('en-US', { weekday: 'long' }) + ' ' + formatTime(timestamp);
+     } else {
+       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + formatTime(timestamp);
+     }
+   };
+
+   return messagesId ? (
+     <div className='chat-box'>
+
+       {/* Header */}
+       <div className="chat-user">
+         <img src={chatUser.userData.avatar} alt="" />
+         <p>
+           {chatUser.userData.name}
+         </p>
+         <img src={assets.help_icon} className='help' alt="" />
+       </div>
+
+       {/* Messages */}
+       <div className="chat-msg">
+         {messages?.map((msg, index) => (
+           <div key={index} className={msg.sId === userData.id ? "s-msg" : "r-msg"}>
+             {msg.type === "image" ? (
+               <img src={msg.text} alt="image" className="msg-image" />
+             ) : (
+               <p className="msg">{msg.text}</p>
+             )}
+             <span className="msg-time">{formatMessageTime(msg.createdAt)}</span>
+           </div>
+         ))}
+         <div ref={messagesEndRef} />
+       </div>
 
       {/* Input */}
       <div className="chat-input">
