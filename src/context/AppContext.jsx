@@ -1,97 +1,42 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState, useEffect } from "react";
-import {  auth,db } from "../config/firebase";
-import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import App from "../App";
+import { createContext, useState, useEffect } from 'react';
+import { db } from '../config/firebase';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import App from '../App';
 
 export const AppContext = createContext();
 
 const AppContextProvider = () => {
-  const navigate = useNavigate()
+  const [chatData, setChatData] = useState([]);
+  const [messagesId, setMessagesId] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [chatUser, setChatUser] = useState(null);
 
-  const [userData, setUserData] = useState(null);
-  const [chatData, setChatData] = useState(null);
-   const [messagesId,setMessagesId] = useState(null)
-    const [messages,setMessages] = useState([])
-     const [chatUser, setChatUser] = useState(null)
-
-  const loadUserData = async (uid) => {
-    try {
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-      const userData = userSnap.data()
-      setUserData(userData);
-
-      if (userData.avatar && userData.name) {
-        navigate('/chat')
-      }else{
-        navigate('/profile')
-      }
-      await updateDoc(userRef,{
-        lastSeen:Date.now()
-      })
-      setInterval(async () =>{
-        if (auth.chatUser) {
-            await updateDoc(userRef,{
-                lastSeen:Date.now()
-            })
-        }
-      },60000)
-
-    } catch (error) {
-      
-    }
-  };
   useEffect(() => {
-  if (userData) {
-    const chatRef = doc(db, "chats", userData.id);
-
+    const chatRef = doc(db, 'chats', 'default');
     const unSub = onSnapshot(chatRef, async (res) => {
-      const chatItems = res.data().chatsData;
-
-      const tempData = [];
-
-      for (const item of chatItems) {
-        const userRef = doc(db, "users", item.rId);
-        const userSnap = await getDoc(userRef);
-
-        const userData = userSnap.data();
-
-        tempData.push({
-          ...item,
-          userData
-        });
+      if (!res.exists()) {
+        setChatData([]);
+        return;
       }
-
-      setChatData(
-        tempData.sort((a, b) => b.updatedAt - a.updatedAt)
-      );
+      const chatItems = res.data().chatsData || [];
+      const tempData = [];
+      for (const item of chatItems) {
+        const userRef = doc(db, 'users', item.rId);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        tempData.push({ ...item, userData });
+      }
+      setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
     });
+    return () => { unSub(); };
+  }, []);
 
-    return () => {
-      unSub();
-    };
-  } 
-}, [userData]);
-  
-
-  const value = {
-    userData,
-    setUserData,
-    chatData,
-    setChatData,
-    loadUserData,
-    messages, setMessages,
-    messagesId,setMessagesId,
-    chatUser, setChatUser
-  };
-
+  const value = { chatData, setChatData, messages, setMessages, messagesId, setMessagesId, chatUser, setChatUser };
   return (
     <AppContext.Provider value={value}>
       <App />
     </AppContext.Provider>
   );
 };
-
 export default AppContextProvider;

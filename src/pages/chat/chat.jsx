@@ -6,13 +6,13 @@ import ChatBox from '../../components/ChatBox/ChatBox'
 import { AppContext } from '../../context/AppContext'
 
 function Chat() {
-  const {chatData,userData} = useContext(AppContext)
+  const {chatData} = useContext(AppContext)
   const [loading,setLoading] = useState(true)
   useEffect(()=>{
-    if (chatData && userData) {
+    if (chatData) {
       setLoading(false)
     }
-  },[chatData,userData])
+  },[chatData])
   return (
     <div className='chat'>
       {
