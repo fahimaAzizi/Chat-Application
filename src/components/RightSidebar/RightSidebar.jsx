@@ -1,40 +1,36 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './RightSidebar.css'
 import assets from '../../assets/assets'
 import { logout } from '../../config/firebase'
-import { AppContext } from '../../context/AppContext'
 
 const RightSidebar = () => {
-  const { chatUser, messages, messagesId } = useContext(AppContext);
 
-  // Filter only image messages
-  const imageMessages = messages?.filter(msg => msg.type === 'image') || [];
-
+  const {chatUser, messages}
   return (
     <div className='rs'>
+
       {/* Profile Section */}
       <div className="rs-profile">
-        <img src={chatUser?.userData?.avatar || assets.profile_img} alt="" />
+        <img src={assets.profile_img} alt="" />
         <h3>
-          {chatUser?.userData?.name || 'Select a friend'}
-          {chatUser?.userData?.name && <img src={assets.green_dot} className='dot' alt="" />}
+          Richard Sanford 
+          <img src={assets.green_dot} className='dot' alt="" />
         </h3>
-        <p>{chatUser?.userData?.bio || 'Hey, There i am using chat app'}</p>
+        <p>Hey, There i am Richard Sanford using chat app</p>
       </div>
 
       <hr />
 
       {/* Media Section */}
       <div className="rs-media">
-        <p>Media ({imageMessages.length})</p>
+        <p>Media</p>
         <div className='rs-img'>
-          {imageMessages.length > 0 ? (
-            imageMessages.map((msg, index) => (
-              <img key={index} src={msg.text} alt="shared image" />
-            ))
-          ) : (
-            <p className='no-media'>No images shared yet</p>
-          )}
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic2} alt="" />
+          <img src={assets.pic3} alt="" />
+          <img src={assets.pic4} alt="" />
+          <img src={assets.pic1} alt="" />
+          <img src={assets.pic3} alt="" />
         </div>
       </div>
      <button onClick={()=>logout()} className=''>
