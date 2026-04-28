@@ -88,6 +88,9 @@ const ChatBox = () => {
         {messages?.map((msg, index) => (
           <div key={index} className={msg.sId === userData.id ? "s-msg" : "r-msg"}>
             <p className="msg">{msg.text}</p>
+            <span className="msg-time">
+              {msg.createdAt?.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
+            </span>
           </div>
         ))}
       </div>
