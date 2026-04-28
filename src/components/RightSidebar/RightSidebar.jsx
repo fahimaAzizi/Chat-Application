@@ -5,7 +5,6 @@ import { logout } from '../../config/firebase'
 
 const RightSidebar = () => {
 
-  const {chatUser, messages}
   return (
     <div className='rs'>
 
