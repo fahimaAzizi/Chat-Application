@@ -46,7 +46,7 @@ const ChatBox = () => {
       });
       return () => unsub();
     }
-  }, [messagesId]);
+  }, [messagesId, setMessages]);
 
   return messagesId ? (
     <div className='chat-box'>
