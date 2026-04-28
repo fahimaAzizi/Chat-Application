@@ -7,12 +7,7 @@ import { AppContext } from '../../context/AppContext'
 
 function Chat() {
   const {chatData} = useContext(AppContext)
-  const [loading,setLoading] = useState(true)
-  useEffect(()=>{
-    if (chatData) {
-      setLoading(false)
-    }
-  },[chatData])
+  const loading = !chatData
   return (
     <div className='chat'>
       {
